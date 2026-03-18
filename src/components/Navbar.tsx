@@ -1,6 +1,7 @@
 import { NAVIGATION_ITEMS } from "@/lib/config";
 import ThemeToggle from "@/components/ThemeToggle";
 import MobileMenu from "@/components/MobileMenu";
+import logo from "/Zinova_logo.png";
 
 const Navbar = () => {
   return (
@@ -8,7 +9,7 @@ const Navbar = () => {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
         <div className="flex items-center gap-4">
           <img 
-            src="/Zinova_logo.PNG" 
+            src={logo} 
             alt="Zinova" 
             className="h-12 w-12 object-contain"
           />
