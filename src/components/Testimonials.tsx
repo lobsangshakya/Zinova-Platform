@@ -3,11 +3,11 @@ import { Quote } from "lucide-react";
 
 const Testimonials = () => {
   return (
-    <section className="py-20 px-6 bg-background">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Community Voices 🗣️
+    <section className="bg-background px-4 py-20 sm:px-6 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-16 space-y-4 text-center">
+          <h2 className="text-3xl font-bold text-foreground md:text-4xl">
+            Community Voices
           </h2>
           <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -15,15 +15,15 @@ const Testimonials = () => {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid gap-8 md:grid-cols-3">
           {TESTIMONIALS.map((testimonial, index) => (
             <div 
               key={index} 
-              className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="rounded-xl border border-border bg-card p-6 shadow-sm transition-shadow duration-300 hover:shadow-md"
             >
               <div className="flex items-start mb-4">
                 <Quote className="h-6 w-6 text-accent flex-shrink-0 mr-2" />
-                <p className="text-muted-foreground italic">
+                <p className="text-sm italic leading-relaxed text-muted-foreground">
                   "{testimonial.content}"
                 </p>
               </div>

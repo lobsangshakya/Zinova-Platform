@@ -25,34 +25,34 @@ const iconMap: Record<string, React.ComponentType<{className?: string}>> = {
 
 const Features = () => {
   return (
-    <section className="py-20 px-6 bg-background">
-      <div className="max-w-6xl mx-auto space-y-12">
+    <section className="bg-background px-4 py-20 sm:px-6 lg:py-24">
+      <div className="mx-auto max-w-6xl space-y-12">
         <div className="text-center space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Powered by Innovation 🚀
+          <h2 className="text-3xl font-bold text-foreground md:text-4xl">
+            Powered by Innovation
           </h2>
           <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Advanced technology working together to create sustainable impact 🌍
+          <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            Advanced technology working together to create sustainable impact.
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((feature, index) => {
             const IconComponent = iconMap[feature.icon];
             return (
               <Card 
                 key={index} 
-                className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border h-full"
+                className="group h-full border-border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
                 <CardHeader>
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-accent/10 transition-colors">
                     {IconComponent && <IconComponent className="h-6 w-6 text-primary group-hover:text-accent transition-colors" />}
                   </div>
-                  <CardTitle className="text-foreground">{feature.title}</CardTitle>
+                  <CardTitle className="text-xl text-foreground">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-muted-foreground leading-relaxed">
+                  <CardDescription className="text-sm leading-relaxed text-muted-foreground">
                     {feature.description}
                   </CardDescription>
                 </CardContent>

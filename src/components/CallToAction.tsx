@@ -45,24 +45,24 @@ const CallToAction = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-br from-primary to-primary/90 text-primary-foreground">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <section className="bg-gradient-to-br from-primary to-primary/90 px-4 py-20 text-primary-foreground sm:px-6 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Left Column - Benefits */}
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Transform Waste Into Worth 🌟
+            <h2 className="mb-6 text-3xl font-bold md:text-4xl">
+              Transform Waste Into Worth
             </h2>
-            <p className="text-lg text-primary-foreground/90 mb-8 max-w-xl">
+            <p className="mb-8 max-w-xl text-base leading-relaxed text-primary-foreground/90 md:text-lg">
               Join the growing community of restaurants, farms, and NGOs making a real impact on food waste and hunger.
             </p>
             
-            <div className="grid sm:grid-cols-2 gap-6 mb-8">
+            <div className="mb-8 grid gap-6 sm:grid-cols-2">
               {benefits.map((benefit, index) => {
                 const Icon = benefit.icon;
                 return (
-                  <div key={index} className="flex items-start">
-                    <div className="p-2 bg-primary-foreground/10 rounded-lg mr-4">
+                  <div key={index} className="flex items-start gap-4">
+                    <div className="rounded-lg bg-primary-foreground/10 p-2">
                       <Icon className="h-5 w-5 text-accent" />
                     </div>
                     <div>
@@ -97,7 +97,7 @@ const CallToAction = () => {
           </div>
           
           {/* Right Column - Email Signup */}
-          <div className="bg-card/10 backdrop-blur-sm rounded-2xl p-8 border border-primary-foreground/20">
+          <div className="rounded-2xl border border-primary-foreground/20 bg-card/10 p-8 backdrop-blur-sm">
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold text-primary-foreground mb-2">
                 Ready to Get Started?
@@ -109,11 +109,11 @@ const CallToAction = () => {
             
             {isSubmitted ? (
               <div className="text-center py-8">
-                <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-500/20">
                   <Heart className="h-8 w-8 text-green-400" />
                 </div>
                 <h4 className="text-xl font-bold text-primary-foreground mb-2">
-                  Thank You! 🙏
+                  Thank You!
                 </h4>
                 <p className="text-primary-foreground/80">
                   We've received your information and will contact you soon.
@@ -122,19 +122,19 @@ const CallToAction = () => {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-primary-foreground/80 mb-1">
+                  <label htmlFor="name" className="mb-2 block text-sm font-medium text-primary-foreground/80">
                     Full Name
                   </label>
                   <input
                     type="text"
                     id="name"
                     placeholder="Enter your name"
-                    className="w-full px-4 py-3 bg-white/10 border border-primary-foreground/20 rounded-lg text-white placeholder-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full rounded-lg border border-primary-foreground/20 bg-white/10 px-4 py-3 text-white placeholder-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-primary-foreground/80 mb-1">
+                  <label htmlFor="email" className="mb-2 block text-sm font-medium text-primary-foreground/80">
                     Work Email
                   </label>
                   <input
@@ -144,19 +144,19 @@ const CallToAction = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
                     required
-                    className="w-full px-4 py-3 bg-white/10 border border-primary-foreground/20 rounded-lg text-white placeholder-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full rounded-lg border border-primary-foreground/20 bg-white/10 px-4 py-3 text-white placeholder-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="organization" className="block text-sm font-medium text-primary-foreground/80 mb-1">
+                  <label htmlFor="organization" className="mb-2 block text-sm font-medium text-primary-foreground/80">
                     Organization
                   </label>
                   <input
                     type="text"
                     id="organization"
                     placeholder="Restaurant, NGO, Farm, etc."
-                    className="w-full px-4 py-3 bg-white/10 border border-primary-foreground/20 rounded-lg text-white placeholder-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full rounded-lg border border-primary-foreground/20 bg-white/10 px-4 py-3 text-white placeholder-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                 </div>
                 

@@ -17,7 +17,6 @@ export const APP_CONFIG = {
 export const NAVIGATION_ITEMS = [
   { name: "About", href: "#about" },
   { name: "Features", href: "#features" },
-  { name: "Impact", href: "#impact" },
   { name: "Contact", href: "#contact" }
 ];
 
@@ -25,42 +24,42 @@ export const NAVIGATION_ITEMS = [
 export const FEATURES = [
   {
     icon: "Brain",
-    title: "AI Matching 🤖",
+    title: "AI Matching",
     description: "Smart algorithms connect surplus food with communities in need instantly and efficiently."
   },
   {
     icon: "Shield",
-    title: "Blockchain Transparency 🔒",
+    title: "Blockchain Transparency",
     description: "Complete traceability and trust through immutable records of every transaction."
   },
   {
     icon: "Truck",
-    title: "Smart Logistics 🚚",
+    title: "Smart Logistics",
     description: "Optimized logistics and routing to ensure fast, efficient food distribution."
   },
   {
     icon: "BarChart3",
-    title: "Impact Analytics 📊",
+    title: "Impact Analytics",
     description: "Real-time analytics and insights to measure impact and optimize operations."
   },
   {
     icon: "Wheat",
-    title: "Food Waste Tracking 🌾",
+    title: "Food Waste Tracking",
     description: "Track and measure food waste reduction across the entire supply chain."
   },
   {
     icon: "Users",
-    title: "Community Network 👥",
+    title: "Community Network",
     description: "Connect with a growing network of farmers, restaurants, and NGOs."
   },
   {
     icon: "Package",
-    title: "Quality Assurance 📦",
+    title: "Quality Assurance",
     description: "Ensure food safety and quality throughout the redistribution process."
   },
   {
     icon: "Map",
-    title: "Real-time Tracking 🗺️",
+    title: "Real-time Tracking",
     description: "Live tracking of food donations from source to recipient."
   }
 ];
@@ -69,25 +68,25 @@ export const FEATURES = [
 export const IMPACT_STATS = [
   { 
     value: 50000, 
-    label: "Meals Saved 🍽️",
+    label: "Meals Saved",
     icon: "Heart",
     suffix: "+"
   },
   { 
     value: 25, 
-    label: "Partner Organizations 🤝",
+    label: "Partner Organizations",
     icon: "Building",
     suffix: "+"
   },
   { 
     value: 15, 
-    label: "Cities Covered 🌆",
+    label: "Cities Covered",
     icon: "MapPin",
     suffix: ""
   },
   { 
     value: 100, 
-    label: "Food Redistributed 📦",
+    label: "Food Redistributed",
     icon: "Package",
     suffix: "T"
   }
@@ -119,22 +118,22 @@ export const TESTIMONIALS = [
 export const VALUE_PROPOSITIONS = [
   {
     icon: "Leaf",
-    title: "Sustainability First 🌱",
+    title: "Sustainability First",
     description: "We're committed to creating a world with zero food waste through innovative technology solutions."
   },
   {
     icon: "Zap",
-    title: "Real-time Impact ⚡",
+    title: "Real-time Impact",
     description: "See the immediate difference your contributions make with our live tracking and analytics."
   },
   {
     icon: "Shield",
-    title: "Complete Transparency 🔒",
+    title: "Complete Transparency",
     description: "Blockchain technology ensures every transaction is traceable, secure, and trustworthy."
   },
   {
     icon: "Heart",
-    title: "Community Focused ❤️",
+    title: "Community Focused",
     description: "Building connections between food providers and communities in need for lasting change."
   }
 ];

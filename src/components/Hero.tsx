@@ -7,31 +7,31 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center px-6 py-20 overflow-hidden">
+    <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden px-4 py-20 sm:px-6 lg:py-24">
       <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary to-background opacity-60" />
       
-      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
-        <div className="flex justify-center items-center gap-4">
+      <div className="relative z-10 mx-auto max-w-4xl animate-fade-in space-y-8 text-center">
+        <div className="flex items-center justify-center gap-4">
           <Leaf className="h-8 w-8 text-green-500" />
-          <h1 className="text-5xl md:text-7xl font-bold text-foreground tracking-tight">
+          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-7xl">
             Zinova
           </h1>
           <Sprout className="h-8 w-8 text-green-500" />
         </div>
         
-        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          Empowering sustainability through technology 🌱
+        <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl md:text-2xl">
+          Empowering sustainability through technology.
         </p>
         
-        <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto">
-          Connecting farmers 🧑‍🌾, restaurants 🍽️, and NGOs ❤️ to fight food waste and hunger with AI-powered solutions
+        <p className="mx-auto max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
+          Connecting farmers, restaurants, and NGOs to fight food waste and hunger with AI-powered solutions.
         </p>
         
-        <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex items-center justify-center gap-4 pt-4 sm:flex-row">
           <AnimatedButton 
             size="lg" 
             onClick={scrollToCalculator}
-            className="group"
+            className="group w-full sm:w-auto"
             variant="hero"
             animationType="lift"
           >

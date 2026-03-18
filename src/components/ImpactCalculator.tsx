@@ -67,11 +67,11 @@ const ImpactCalculator = () => {
   ];
 
   return (
-    <section id="impact-calculator" className="py-20 px-6 bg-gradient-to-br from-primary/10 to-accent/10">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Calculate Your Impact 🌍
+    <section id="impact-calculator" className="bg-gradient-to-br from-primary/10 to-accent/10 px-4 py-20 sm:px-6 lg:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-16 space-y-4 text-center">
+          <h2 className="text-3xl font-bold text-foreground md:text-4xl">
+            Calculate Your Impact
           </h2>
           <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -79,10 +79,10 @@ const ImpactCalculator = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid gap-8 lg:grid-cols-3">
           {/* Calculator Controls */}
-          <div className="lg:col-span-1 bg-card border border-border rounded-xl p-6 shadow-sm">
-            <h3 className="text-xl font-bold text-foreground mb-6">Your Food Waste</h3>
+          <div className="rounded-xl border border-border bg-card p-6 shadow-sm lg:col-span-1">
+            <h3 className="mb-6 text-xl font-bold text-foreground">Your Food Waste</h3>
             
             <div className="space-y-6">
               <div>
@@ -132,7 +132,7 @@ const ImpactCalculator = () => {
               </div>
               
               <div className="pt-4">
-                <div className="bg-primary/5 rounded-lg p-4">
+                <div className="rounded-lg bg-primary/5 p-4">
                   <h4 className="font-bold text-foreground mb-2">With Zinova:</h4>
                   <p className="text-sm text-muted-foreground">
                     {foodWaste > 0 ? (
@@ -148,16 +148,16 @@ const ImpactCalculator = () => {
           
           {/* Impact Results */}
           <div className="lg:col-span-2">
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid gap-6 sm:grid-cols-2">
               {impactItems.map((item, index) => {
                 const Icon = item.icon;
                 return (
                   <div 
                     key={index} 
-                    className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+                    className="rounded-xl border border-border bg-card p-6 shadow-sm transition-shadow duration-300 hover:shadow-md"
                   >
                     <div className="flex items-start mb-4">
-                      <div className={`p-3 rounded-lg ${item.color}/10 mr-4`}>
+                      <div className={`mr-4 rounded-lg p-3 ${item.color}/10`}>
                         <Icon className={`h-6 w-6 ${item.color}`} />
                       </div>
                       <div>
@@ -179,9 +179,9 @@ const ImpactCalculator = () => {
               })}
             </div>
             
-            <div className="mt-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-6 text-white">
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="flex items-center mb-4 md:mb-0 md:mr-4">
+            <div className="mt-8 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-white shadow-sm">
+              <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:gap-6">
+                <div className="flex items-center">
                   <Heart className="h-8 w-8 mr-3" />
                   <div>
                     <h3 className="text-xl font-bold">Ready to Make a Difference?</h3>
@@ -190,7 +190,7 @@ const ImpactCalculator = () => {
                     </p>
                   </div>
                 </div>
-                <button className="ml-auto bg-white text-green-600 font-bold py-3 px-6 rounded-full hover:bg-gray-100 transition-colors whitespace-nowrap">
+                <button className="whitespace-nowrap rounded-lg bg-white px-6 py-3 font-semibold text-green-700 transition-colors hover:bg-gray-100 md:ml-auto">
                   Get Started Today
                 </button>
               </div>

@@ -25,10 +25,10 @@ const FoodFlow = () => {
   }, [steps.length]);
 
   return (
-    <section className="py-16 px-6 bg-gradient-to-r from-green-50 to-blue-50">
+    <section className="bg-gradient-to-r from-green-50 to-blue-50 px-4 py-16 sm:px-6 lg:py-20">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
-          The Zinova Food Flow 🌱
+        <h2 className="mb-12 text-center text-3xl font-bold text-foreground md:text-4xl">
+          The Zinova Food Flow
         </h2>
         
         <div className="relative">
@@ -36,7 +36,7 @@ const FoodFlow = () => {
           <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 transform -translate-y-1/2 rounded-full"></div>
           
           {/* Flow steps */}
-          <div className="relative flex justify-between">
+          <div className="relative flex justify-between gap-2 sm:gap-4">
             {steps.map((step, index) => {
               const IconComponent = iconMap[step.icon];
               const isActive = index === activeStep;
@@ -52,7 +52,7 @@ const FoodFlow = () => {
                     {IconComponent && <IconComponent className={`w-8 h-8 ${step.color} ${isActive ? 'animate-pulse' : ''}`} />}
                   </div>
                   <span className={`
-                    text-sm font-medium text-center px-2 py-1 rounded-full
+                    rounded-full px-2 py-1 text-center text-sm font-medium
                     ${isActive ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'}
                   `}>
                     {step.label}
@@ -64,7 +64,7 @@ const FoodFlow = () => {
         </div>
         
         <div className="mt-16 text-center">
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
             Watch how surplus food transforms from farm to table to community impact through our innovative platform
           </p>
         </div>

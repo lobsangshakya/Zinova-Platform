@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from "react";
+import { cn } from "@/lib/utils";
 
 interface AnimatedCounterProps {
   target: number;
   suffix?: string;
   duration?: number;
+  className?: string;
+  formatValue?: (value: number) => string;
 }
 
-const AnimatedCounter = ({ target, suffix = "", duration = 2000 }: AnimatedCounterProps) => {
+const AnimatedCounter = ({ target, suffix = "", duration = 2000, className, formatValue }: AnimatedCounterProps) => {
   const [count, setCount] = useState(0);
   const counterRef = useRef<HTMLSpanElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -53,8 +56,9 @@ const AnimatedCounter = ({ target, suffix = "", duration = 2000 }: AnimatedCount
   }, [target, duration, isVisible]);
 
   return (
-    <span ref={counterRef} className="text-4xl md:text-5xl font-bold text-accent">
-      {count.toLocaleString()}{suffix}
+    <span ref={counterRef} className={cn("text-4xl font-bold text-accent md:text-5xl", className)}>
+      {formatValue ? formatValue(count) : count.toLocaleString()}
+      {suffix}
     </span>
   );
 };
