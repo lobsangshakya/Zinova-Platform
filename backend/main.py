@@ -21,7 +21,13 @@ app = FastAPI(title="Zinova API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[CORS_ORIGIN, "http://localhost", "http://localhost:3000"],
+    allow_origins=[
+        CORS_ORIGIN,
+        "http://localhost",
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "https://zinova-platform.netlify.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

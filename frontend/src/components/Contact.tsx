@@ -6,6 +6,13 @@ import { Send, User, Mail, Building, MessageSquare, CheckCircle } from "lucide-r
 import AnimatedButton from "@/components/ui/animated-button";
 import { logError, logUserAction } from "@/lib/logger";
 import { submitFormToFastApi } from "@/services/formSubmission";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -13,6 +20,7 @@ const Contact = () => {
     name: "",
     email: "",
     organization: "",
+    userType: "",
     message: ""
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -41,6 +49,7 @@ const Contact = () => {
       name: formData.name.trim(),
       email: formData.email.trim(),
       organization: formData.organization.trim(),
+      userType: formData.userType as "NGO" | "Restaurant",
       message: formData.message.trim(),
       source: "contact" as const,
     };
@@ -58,6 +67,15 @@ const Contact = () => {
       toast({
         title: "Validation error",
         description: "Email is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!payload.userType) {
+      toast({
+        title: "Validation error",
+        description: "Please select whether you are registering as an NGO or Restaurant",
         variant: "destructive",
       });
       return;
@@ -107,7 +125,7 @@ const Contact = () => {
       });
 
       setIsSubmitted(true);
-      setFormData({ name: "", email: "", organization: "", message: "" });
+      setFormData({ name: "", email: "", organization: "", userType: "", message: "" });
 
       safeLogUserAction("FORM_SUCCESS", { form: "contact" });
 
@@ -130,7 +148,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="px-4 py-20 sm:px-6 lg:py-24">
+    <section id="contact" className="scroll-mt-24 px-4 py-20 sm:scroll-mt-28 sm:px-6 lg:scroll-mt-32 lg:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-3xl font-bold text-foreground md:text-4xl">
@@ -139,6 +157,9 @@ const Contact = () => {
           <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
           <p className="text-base leading-relaxed text-muted-foreground max-w-xl mx-auto">
             Whether you're a farmer, restaurant, NGO, or just want to help, let's connect.
+          </p>
+          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+            Restaurants can donate surplus food. NGOs can receive and distribute food to people in need.
           </p>
         </div>
         
@@ -218,19 +239,39 @@ const Contact = () => {
                     </div>
                   </div>
                 </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">I am registering as</label>
+                  <Select
+                    value={formData.userType}
+                    onValueChange={(value) => setFormData({ ...formData, userType: value })}
+                  >
+                    <SelectTrigger className="h-12 rounded-xl border-border/50 bg-secondary/30 text-sm focus:border-primary focus:ring-primary/20 transition-colors">
+                      <SelectValue placeholder="Select NGO or Restaurant" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="NGO">NGO</SelectItem>
+                      <SelectItem value="Restaurant">Restaurant</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
                 
                 <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Organization</label>
+                  <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Organization Name</label>
                   <div className="relative">
                     <Building className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
                     <Input
-                      placeholder="Restaurant, NGO, Farm, etc."
+                      placeholder={formData.userType === "NGO" ? "NGO/Foundation Name" : formData.userType === "Restaurant" ? "Restaurant/Hotel Name" : "Select a type first"}
                       value={formData.organization}
                       onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
                       className="h-12 rounded-xl border-border/50 bg-secondary/30 pl-11 text-sm focus:border-primary focus:ring-primary/20 transition-colors"
                     />
                   </div>
                 </div>
+
+                <p className="text-sm text-muted-foreground">
+                  Restaurants can donate surplus food. NGOs can receive and distribute food to people in need.
+                </p>
                 
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Message</label>
@@ -246,20 +287,13 @@ const Contact = () => {
                   </div>
                 </div>
                 
-                <AnimatedButton type="submit" className="w-full h-12 rounded-xl text-base font-bold" size="lg" variant="hero" animationType="pulse">
+                <AnimatedButton type="submit" disabled={isSubmitting} className="w-full h-12 rounded-xl text-base font-bold" size="lg" variant="hero" animationType="pulse">
                   Send Message <Send className="ml-2 h-4 w-4" />
                 </AnimatedButton>
               </form>
             )}
           </div>
         </div>
-            </div>
-            
-            <AnimatedButton type="submit" disabled={isSubmitting} className="w-full" size="lg" variant="hero" animationType="pulse">
-              {isSubmitting ? "Sending..." : "Send Message"} <Send className="ml-2 h-4 w-4" />
-            </AnimatedButton>
-          </form>
-        )}
       </div>
     </section>
   );

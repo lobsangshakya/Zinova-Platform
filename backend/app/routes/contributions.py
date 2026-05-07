@@ -14,21 +14,31 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 SPREADSHEET_ID = os.getenv(
     "GOOGLE_SPREADSHEET_ID", "1_T4c75_Jjbi8b16HJLqsSeBK3iZxRLQCgpq-OnXJCGY"
 )
-SERVICE_ACCOUNT_FILE = os.getenv(
-    "GOOGLE_SERVICE_ACCOUNT_FILE",
-    str(Path(__file__).resolve().parents[3] / "service-account.json"),
-)
+RENDER_SERVICE_ACCOUNT_FILE = Path("/etc/secrets/service-account.json")
+LOCAL_SERVICE_ACCOUNT_FILE = Path(__file__).resolve().parents[3] / "service-account.json"
+
+
+def resolve_service_account_path() -> Path:
+    for candidate in (RENDER_SERVICE_ACCOUNT_FILE, LOCAL_SERVICE_ACCOUNT_FILE):
+        if candidate.exists():
+            logger.info("Using Google service account file from %s", candidate.parent)
+            return candidate
+
+    logger.error("Google service account file not found in Render secrets or local project path")
+    raise RuntimeError("Google service account file not found")
 
 
 @lru_cache(maxsize=1)
 def get_sheets_client():
-    path = Path(SERVICE_ACCOUNT_FILE)
-    if not path.exists():
-        raise RuntimeError(f"Service account file not found at: {path}")
-    creds = service_account.Credentials.from_service_account_file(
-        str(path), scopes=SCOPES
-    )
-    return build("sheets", "v4", credentials=creds, cache_discovery=False)
+    try:
+        path = resolve_service_account_path()
+        creds = service_account.Credentials.from_service_account_file(
+            str(path), scopes=SCOPES
+        )
+        return build("sheets", "v4", credentials=creds, cache_discovery=False)
+    except Exception:
+        logger.exception("Failed to initialize Google Sheets client")
+        raise
 
 
 @router.get("/contributions")

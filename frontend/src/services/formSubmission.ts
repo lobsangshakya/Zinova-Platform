@@ -2,6 +2,7 @@ export interface SubmitPayload {
   name: string;
   email: string;
   organization: string;
+  userType: "NGO" | "Restaurant";
   message: string;
   source: "landing" | "contact";
 }
@@ -14,7 +15,7 @@ export interface SubmitResult {
 }
 
 const API_BASE = import.meta.env.VITE_API_URL || "";
-const SUBMIT_URL = `${API_BASE}/api/submit`;
+const SUBMIT_URL = `${API_BASE}/api/general-leads`;
 
 export async function submitFormToFastApi(payload: SubmitPayload): Promise<SubmitResult> {
   console.log("Sending data:", payload);
@@ -25,7 +26,14 @@ export async function submitFormToFastApi(payload: SubmitPayload): Promise<Submi
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        fullName: payload.name,
+        email: payload.email,
+        organizationName: payload.organization,
+        userType: payload.userType,
+        messageSource: payload.source === "contact" ? "Join Movement" : "Hero Section",
+        notes: payload.message,
+      }),
     });
 
     let result: unknown = null;

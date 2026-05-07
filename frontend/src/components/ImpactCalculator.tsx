@@ -16,6 +16,16 @@ const ImpactCalculator = () => {
     peopleFed: 0
   });
 
+  const scrollToContactSection = () => {
+    const contactSection = document.getElementById("contact");
+
+    if (!contactSection) {
+      return;
+    }
+
+    contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   // Debounce the input values
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -216,6 +226,7 @@ const ImpactCalculator = () => {
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={() => {
                     try {
                       logUserAction(
@@ -226,6 +237,8 @@ const ImpactCalculator = () => {
                     } catch {
                       // Logging should never block CTA behavior.
                     }
+
+                    scrollToContactSection();
                   }}
                   className="whitespace-nowrap rounded-lg bg-white px-6 py-3 font-semibold text-green-700 transition-colors hover:bg-gray-100 dark:border dark:border-[var(--border-color)] dark:bg-[var(--card-bg)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-secondary)] md:ml-auto"
                 >

@@ -6,13 +6,17 @@ import { SubmitButton } from "@/components/forms/SubmitButton";
 import { Heart, ArrowLeft, CheckCircle2, Building2, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import PortalBackground from "@/components/PortalBackground";
+import { useToast } from "@/hooks/use-toast";
+import { registerNGO } from "@/services/api";
 
 type Step = 1 | 2 | 3;
 
 const NgoSignup = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [step, setStep] = useState<Step>(1);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     orgName: "",
     email: "",
@@ -24,6 +28,7 @@ const NgoSignup = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(null);
   };
 
   const handleNext = (e: FormEvent) => {
@@ -34,11 +39,38 @@ const NgoSignup = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
+    setError(null);
+
+    try {
+      const response = await registerNGO(formData);
+      
+      if (response.data?.success) {
+        toast({
+          title: "Success!",
+          description: "NGO registration submitted successfully. We'll review your details and contact you within 24-48 hours.",
+          variant: "default",
+        });
+        setStep(3);
+      } else {
+        const errorMsg = response.data?.error || "Registration failed. Please try again.";
+        setError(errorMsg);
+        toast({
+          title: "Registration Failed",
+          description: errorMsg,
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : "An error occurred during registration";
+      setError(errorMsg);
+      toast({
+        title: "Error",
+        description: errorMsg,
+        variant: "destructive",
+      });
+    } finally {
       setLoading(false);
-      setStep(3);
-    }, 1500);
+    }
   };
 
   return (

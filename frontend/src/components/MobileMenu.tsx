@@ -58,7 +58,7 @@ const MobileMenu = () => {
                     <div className="p-2 bg-accent/10 rounded-lg">
                       <Utensils className="h-4 w-4 text-accent" />
                     </div>
-                    <span className="font-medium text-sm">Kitchen Portal</span>
+                    <span className="font-medium text-sm">Restaurant Portal</span>
                   </a>
                 </div>
               </div>
@@ -80,7 +80,7 @@ const MobileMenu = () => {
                     onClick={() => setIsOpen(false)}
                   >
                     <Utensils className="h-4 w-4" />
-                    <span className="font-semibold text-sm">Kitchen Partnership</span>
+                    <span className="font-semibold text-sm">Restaurant Partnership</span>
                   </a>
                 </div>
               </div>

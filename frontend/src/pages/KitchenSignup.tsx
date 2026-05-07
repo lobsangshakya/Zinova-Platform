@@ -6,13 +6,17 @@ import { SubmitButton } from "@/components/forms/SubmitButton";
 import { ChefHat, ArrowLeft, CheckCircle2, Utensils, MapPin, Store } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import PortalBackground from "@/components/PortalBackground";
+import { useToast } from "@/hooks/use-toast";
+import { registerKitchen } from "@/services/api";
 
 type Step = 1 | 2 | 3;
 
 const KitchenSignup = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [step, setStep] = useState<Step>(1);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     businessName: "",
     email: "",
@@ -24,6 +28,7 @@ const KitchenSignup = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(null);
   };
 
   const handleNext = (e: FormEvent) => {
@@ -34,11 +39,38 @@ const KitchenSignup = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
+    setError(null);
+
+    try {
+      const response = await registerKitchen(formData);
+      
+      if (response.data?.success) {
+        toast({
+          title: "Success!",
+          description: "Restaurant registration submitted successfully. We'll review your details and contact you shortly to complete the onboarding.",
+          variant: "default",
+        });
+        setStep(3);
+      } else {
+        const errorMsg = response.data?.error || "Registration failed. Please try again.";
+        setError(errorMsg);
+        toast({
+          title: "Registration Failed",
+          description: errorMsg,
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : "An error occurred during registration";
+      setError(errorMsg);
+      toast({
+        title: "Error",
+        description: errorMsg,
+        variant: "destructive",
+      });
+    } finally {
       setLoading(false);
-      setStep(3);
-    }, 1500);
+    }
   };
 
   return (
@@ -59,7 +91,7 @@ const KitchenSignup = () => {
               <Utensils className="w-8 h-8 text-accent" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight">Partner your Kitchen</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Partner your Restaurant</h1>
           <p className="text-muted-foreground mt-2">Start donating surplus food and reducing waste</p>
           
           {/* Progress Bar */}
@@ -89,7 +121,7 @@ const KitchenSignup = () => {
                 
                 <form onSubmit={handleNext} className="space-y-4">
                   <FormInput
-                    id="businessName" name="businessName" label="Kitchen/Restaurant Name"
+                    id="businessName" name="businessName" label="Restaurant Name"
                     placeholder="e.g. Green Olive Bistro"
                     value={formData.businessName} onChange={handleChange} required
                   />
@@ -151,7 +183,7 @@ const KitchenSignup = () => {
                       Back
                     </button>
                     <SubmitButton loading={loading} className="flex-[2] h-11 text-base font-medium bg-accent hover:bg-accent/90 text-accent-foreground">
-                      Register Kitchen
+                      Register Restaurant
                     </SubmitButton>
                   </div>
                 </form>
@@ -178,7 +210,7 @@ const KitchenSignup = () => {
                 <div className="space-y-2">
                   <h2 className="text-3xl font-bold tracking-tight text-accent">Welcome Aboard!</h2>
                   <p className="text-muted-foreground">
-                    Your kitchen partnership request has been submitted. We'll review your application and contact you shortly to complete the onboarding.
+                    Your restaurant partnership request has been submitted. We'll review your application and contact you shortly to complete the onboarding.
                   </p>
                 </div>
                 <button

@@ -1,17 +1,17 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FormCard } from "@/components/forms/FormCard";
 import { FormInput } from "@/components/forms/FormInput";
 import { SubmitButton } from "@/components/forms/SubmitButton";
 
-const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "https://zinova-backend.onrender.com";
 
 type Step = "details" | "otp" | "done";
 
-const Login = () => {
-  const navigate = useNavigate();
+const Signup = () => {
   const [step, setStep]       = useState<Step>("details");
   const [email, setEmail]     = useState("");
+  const [name, setName]       = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -20,10 +20,12 @@ const Login = () => {
   async function handleSendOtp(e: FormEvent) {
     e.preventDefault();
     setError(null);
+    if (!name) return setError("Please enter your name.");
     if (!email) return setError("Please enter your email.");
+    
     setLoading(true);
     try {
-      const res = await fetch(`${₹}/api/auth/send-otp`, {
+      const res = await fetch(`${API}/api/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim().toLowerCase() }),
@@ -52,11 +54,8 @@ const Login = () => {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || "Invalid OTP.");
-      localStorage.setItem("authToken", email.trim().toLowerCase());
-      localStorage.setItem("userEmail", email.trim().toLowerCase());
       setStep("done");
-      setSuccess("OTP verified! Redirecting to dashboard...");
-      setTimeout(() => navigate("/dashboard", { replace: true }), 800);
+      setSuccess("OTP verified! Welcome to Zinova.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Verification failed.");
     } finally {
@@ -72,14 +71,14 @@ const Login = () => {
 
             <div className="space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-                {step === "otp" ? "Enter OTP" : step === "done" ? "Verified!" : "Verify your email"}
+                {step === "otp" ? "Enter OTP" : step === "done" ? "Verified!" : "Create an account"}
               </h1>
               <p className="text-sm text-slate-600">
                 {step === "otp"
                   ? "Check your inbox for a 6-digit code"
                   : step === "done"
-                  ? "Your email has been verified"
-                  : "We'll send a one-time code to your email"}
+                  ? "Your account has been created"
+                  : "Join us to empower sustainability"}
               </p>
             </div>
 
@@ -97,18 +96,26 @@ const Login = () => {
             {step === "details" && (
               <form className="space-y-4" onSubmit={handleSendOtp} noValidate>
                 <FormInput
+                  id="name" name="name" type="text" label="Full Name"
+                  placeholder="John Doe"
+                  value={name}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                  required disabled={loading}
+                />
+                <FormInput
                   id="email" name="email" type="email" label="Email"
+                  placeholder="john@example.com"
                   value={email}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                   autoComplete="email" required disabled={loading}
                 />
                 <SubmitButton type="submit" loading={loading} disabled={loading} className="w-full">
-                  Send OTP
+                  Create Account
                 </SubmitButton>
                 <div className="text-center text-sm text-slate-600">
-                  Don't have an account?{" "}
-                  <Link to="/signup" className="font-medium text-primary hover:underline">
-                    Sign up
+                  Already have an account?{" "}
+                  <Link to="/login" className="font-medium text-primary hover:underline">
+                    Log in
                   </Link>
                 </div>
               </form>
@@ -135,6 +142,16 @@ const Login = () => {
               </form>
             )}
 
+            {step === "done" && (
+              <div className="space-y-4 text-center">
+                 <Link to="/dashboard">
+                  <SubmitButton className="w-full">
+                    Go to Dashboard
+                  </SubmitButton>
+                </Link>
+              </div>
+            )}
+
           </div>
         </FormCard>
       </div>
@@ -142,4 +159,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

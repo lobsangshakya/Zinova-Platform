@@ -3,15 +3,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FormCard } from "@/components/forms/FormCard";
 import { FormInput } from "@/components/forms/FormInput";
 import { SubmitButton } from "@/components/forms/SubmitButton";
-import { ChefHat, ArrowLeft, ShieldCheck, Utensils } from "lucide-react";
+import { Heart, ArrowLeft, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import PortalBackground from "@/components/PortalBackground";
 
-const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "https://zinova-backend.onrender.com";
 
 type Step = "details" | "otp" | "done";
 
-const KitchenLogin = () => {
+const NgoLogin = () => {
   const [step, setStep] = useState<Step>("details");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -65,7 +65,7 @@ const KitchenLogin = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden flex items-center justify-center px-4 py-12">
-      <PortalBackground variant="accent" />
+      <PortalBackground variant="primary" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -74,25 +74,19 @@ const KitchenLogin = () => {
         className="w-full max-w-md"
       >
         <div className="mb-8 text-center space-y-2">
-          <Link to="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-accent transition-colors mb-4">
+          <Link to="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-4">
             <ArrowLeft className="w-4 h-4 mr-1" /> Back to Home
           </Link>
           <div className="flex justify-center mb-4">
-            <div className="p-3 bg-accent/10 rounded-2xl relative">
-              <Utensils className="w-8 h-8 text-accent" />
-              <div className="absolute -top-1 -right-1 p-1 bg-white dark:bg-slate-900 rounded-full border border-accent/20">
-                 <ChefHat className="w-4 h-4 text-accent" />
-              </div>
+            <div className="p-3 bg-primary/10 rounded-2xl">
+              <Heart className="w-8 h-8 text-primary" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight">Kitchen Portal</h1>
-          <p className="text-muted-foreground">Manage your surplus and reach those in need</p>
+          <h1 className="text-3xl font-bold tracking-tight">NGO Portal</h1>
+          <p className="text-muted-foreground">Empowering communities through surplus food</p>
         </div>
 
         <FormCard className="backdrop-blur-xl bg-card/80 border-border/50 shadow-2xl relative overflow-hidden">
-          {/* Subtle Accent Stripe */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent to-accent/50" />
-          
           <AnimatePresence mode="wait">
             {step === "details" && (
               <motion.div
@@ -100,11 +94,11 @@ const KitchenLogin = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
-                className="space-y-6 pt-4"
+                className="space-y-6"
               >
                 <div className="space-y-2">
-                  <h2 className="text-xl font-semibold">Kitchen Access</h2>
-                  <p className="text-sm text-muted-foreground">Log in to your kitchen dashboard using your registered email.</p>
+                  <h2 className="text-xl font-semibold">Verify Identity</h2>
+                  <p className="text-sm text-muted-foreground">Enter your registered NGO email to receive a secure login code.</p>
                 </div>
 
                 {error && (
@@ -122,15 +116,15 @@ const KitchenLogin = () => {
                     id="email"
                     name="email"
                     type="email"
-                    label="Business Email"
-                    placeholder="kitchen@restaurant.com"
+                    label="NGO Email"
+                    placeholder="ngo@example.org"
                     value={email}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                     required
                     disabled={loading}
                   />
-                  <SubmitButton loading={loading} className="w-full h-11 text-base font-medium bg-accent hover:bg-accent/90 text-accent-foreground shadow-accent/20">
-                    Get Access Code
+                  <SubmitButton loading={loading} className="w-full h-11 text-base font-medium">
+                    Send Verification Code
                   </SubmitButton>
                 </form>
               </motion.div>
@@ -142,11 +136,11 @@ const KitchenLogin = () => {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className="space-y-6 pt-4"
+                className="space-y-6"
               >
                 <div className="space-y-2">
-                  <h2 className="text-xl font-semibold">Verify Access</h2>
-                  <p className="text-sm text-muted-foreground">A verification code has been dispatched to <span className="font-medium text-foreground">{email}</span></p>
+                  <h2 className="text-xl font-semibold">Security Check</h2>
+                  <p className="text-sm text-muted-foreground">We've sent a 6-digit code to <span className="font-medium text-foreground">{email}</span></p>
                 </div>
 
                 {error && (
@@ -155,7 +149,7 @@ const KitchenLogin = () => {
                   </div>
                 )}
                 {success && (
-                  <div className="p-3 rounded-lg bg-accent/10 border border-accent/20 text-accent text-sm">
+                  <div className="p-3 rounded-lg bg-primary/10 border border-primary/20 text-primary text-sm">
                     {success}
                   </div>
                 )}
@@ -165,7 +159,7 @@ const KitchenLogin = () => {
                     id="otp"
                     name="otp"
                     type="text"
-                    label="Access Code"
+                    label="Verification Code"
                     placeholder="000000"
                     value={otp}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setOtp(e.target.value)}
@@ -173,15 +167,15 @@ const KitchenLogin = () => {
                     disabled={loading}
                     autoFocus
                   />
-                  <SubmitButton loading={loading} className="w-full h-11 text-base font-medium bg-accent hover:bg-accent/90 text-accent-foreground">
-                    Confirm & Enter
+                  <SubmitButton loading={loading} className="w-full h-11 text-base font-medium">
+                    Verify & Continue
                   </SubmitButton>
                   <button
                     type="button"
                     onClick={() => setStep("details")}
                     className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    Back to email entry
+                    Use a different email
                   </button>
                 </form>
               </motion.div>
@@ -192,19 +186,19 @@ const KitchenLogin = () => {
                 key="done"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-8 space-y-6 pt-4"
+                className="text-center py-8 space-y-6"
               >
                 <div className="flex justify-center">
-                  <div className="p-4 bg-accent/20 rounded-full">
-                    <ShieldCheck className="w-12 h-12 text-accent" />
+                  <div className="p-4 bg-primary/20 rounded-full">
+                    <ShieldCheck className="w-12 h-12 text-primary" />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h2 className="text-2xl font-bold italic">Access Granted</h2>
-                  <p className="text-muted-foreground text-sm">Entering your kitchen management portal...</p>
+                  <h2 className="text-2xl font-bold italic">Authenticated!</h2>
+                  <p className="text-muted-foreground text-sm">Redirecting you to the NGO dashboard...</p>
                 </div>
-                <Link to="/dashboard" className="inline-block w-full py-3 bg-accent text-accent-foreground rounded-lg font-medium shadow-lg hover:shadow-accent/20 transition-all">
-                  Proceed to Dashboard
+                <Link to="/dashboard" className="inline-block w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium shadow-lg hover:shadow-primary/20 transition-all">
+                  Go to Dashboard
                 </Link>
               </motion.div>
             )}
@@ -212,11 +206,11 @@ const KitchenLogin = () => {
         </FormCard>
 
         <p className="mt-8 text-center text-sm text-muted-foreground">
-          Partner with Zinova? <Link to="/signup/kitchen" className="text-accent font-medium hover:underline">Start donating food</Link>
+          Don't have an NGO account? <Link to="/signup/ngo" className="text-primary font-medium hover:underline">Register your organization</Link>
         </p>
       </motion.div>
     </div>
   );
 };
 
-export default KitchenLogin;
+export default NgoLogin;

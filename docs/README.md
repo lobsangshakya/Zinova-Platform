@@ -1,6 +1,6 @@
 # Zinova – AI-Based Food Optimization Platform
 
-Zinova is a full-stack application designed to optimize food resource management using AI. It includes an OTP-based authentication system and a dashboard interface. Google Sheets integration will be added for lightweight data storage.
+Zinova is a full-stack application designed to optimize food resource management using AI. It includes an OTP-based authentication system, a dashboard interface, and Google Sheets integration for lightweight data storage.
 
 ## Features
 
@@ -9,7 +9,7 @@ Zinova is a full-stack application designed to optimize food resource management
 - Dashboard interface
 - FastAPI backend
 - React (Vite + TypeScript) frontend
-- Clean and beginner-friendly structure
+- Clean full-stack structure with separate frontend, backend, and docs folders
 
 ## Tech Stack
 
@@ -20,19 +20,22 @@ Authentication: OTP-based login
 
 ## Project Structure
 
-zinova/
-
-backend/
-  main.py
-  requirements.txt
-  .env.example
+zinova-platform/
 
 frontend/
   src/
+  public/
   package.json
   vite.config.ts
 
-README.md
+backend/
+  app/
+  main.py
+  requirements.txt
+
+docs/
+  README.md
+  GOOGLE_SHEETS_SETUP.md
 
 ## Setup Instructions
 
@@ -59,9 +62,19 @@ uvicorn main:app --reload
 
 ### Frontend setup
 
+From the repository root:
+
+```bash
+npm run dev
+```
+
+Or run the frontend directly:
+
+```bash
 cd frontend
 npm install
 npm run dev
+```
 
 ## How It Works
 
@@ -74,4 +87,4 @@ npm run dev
 
 - Google Sheets integration
 - Data analytics features
-- Deployment
+- Deployment hardening

@@ -136,7 +136,7 @@ const Navbar = () => {
                   <div className="p-2 bg-accent/10 rounded-lg">
                     <Utensils className="w-4 h-4 text-accent" />
                   </div>
-                  <span className="font-semibold">Kitchen Portal</span>
+                  <span className="font-semibold">Restaurant Portal</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -175,7 +175,7 @@ const Navbar = () => {
                     <Utensils className="w-4 h-4 text-accent" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-semibold text-sm">Kitchen</span>
+                    <span className="font-semibold text-sm">Restaurant</span>
                     <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Partnership</span>
                   </div>
                 </DropdownMenuItem>

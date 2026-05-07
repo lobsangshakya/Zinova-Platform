@@ -8,6 +8,7 @@ It handles authentication, data validation, and error handling.
 import os
 import uuid
 from datetime import datetime
+from pathlib import Path
 from typing import List, Dict, Any, Optional
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
@@ -23,6 +24,33 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 USERS_SHEET = 'Users'
 INVENTORY_SHEET = 'Inventory'
 ANALYTICS_SHEET = 'Analytics'
+
+RENDER_SERVICE_ACCOUNT_FILE = Path('/etc/secrets/service-account.json')
+LOCAL_SERVICE_ACCOUNT_FILE = Path(__file__).resolve().parents[3] / 'service-account.json'
+
+
+def resolve_service_account_path(preferred_path: Optional[str] = None) -> Optional[Path]:
+    candidates = [RENDER_SERVICE_ACCOUNT_FILE]
+
+    if preferred_path:
+        candidates.append(Path(preferred_path))
+
+    candidates.append(LOCAL_SERVICE_ACCOUNT_FILE)
+
+    seen = set()
+    for candidate in candidates:
+        candidate = candidate.expanduser()
+        candidate_key = str(candidate)
+        if candidate_key in seen:
+            continue
+        seen.add(candidate_key)
+
+        if candidate.exists():
+            logger.info("Using Google service account file from %s", candidate.parent)
+            return candidate
+
+    logger.error("Google service account file not found in Render secrets or local project path")
+    return None
 
 
 class GoogleSheetsService:
@@ -40,18 +68,19 @@ class GoogleSheetsService:
         self.service = None
         
         try:
-            if not os.path.exists(credentials_path):
-                logger.warning(f"Credentials file not found: {credentials_path}")
+            resolved_path = resolve_service_account_path(credentials_path)
+            if not resolved_path:
+                logger.warning("Google Sheets credentials file not found")
                 return
             
             credentials = Credentials.from_service_account_file(
-                credentials_path,
+                str(resolved_path),
                 scopes=SCOPES
             )
             self.service = build('sheets', 'v4', credentials=credentials)
             logger.info("Google Sheets service initialized successfully")
         except Exception as e:
-            logger.error(f"Failed to initialize Google Sheets service: {e}")
+            logger.exception("Failed to initialize Google Sheets service")
     
     def is_available(self) -> bool:
         """Check if Google Sheets service is available"""
@@ -469,13 +498,12 @@ def get_sheets_service() -> Optional[GoogleSheetsService]:
     global _sheets_service
     
     if _sheets_service is None:
-        credentials_path = os.getenv('GOOGLE_SHEETS_CREDENTIALS_PATH', 'backend/credentials.json')
         spreadsheet_id = os.getenv('GOOGLE_SHEETS_ID')
         
         if not spreadsheet_id:
             logger.warning("GOOGLE_SHEETS_ID not set in environment")
             return None
         
-        _sheets_service = GoogleSheetsService(credentials_path, spreadsheet_id)
+        _sheets_service = GoogleSheetsService('', spreadsheet_id)
     
     return _sheets_service
